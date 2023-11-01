@@ -49,9 +49,9 @@ def write_umlclass_js(uml_object, uml_class_object, export_path):
             defaultValueStr = ''
             if defaultValue:
                 defaultValueStr = ' = ' + defaultValue
-            str = ' * @param {' + item.get('type', '') + '} ' + '[options.' + item.get(
+            str_param = ' * @param {' + str(item.get('type', '')) + '} ' + '[options.' + item.get(
                 'name') + defaultValueStr + '] ' + item.get('documentation', '') + '\n'
-            f.write(str)
+            f.write(str_param)
         f.write(' */\n')
         # class类主体
         f.write('''class {} {}'''.format(name, 'extends ' + super_class + ' ' if super_class else '') + '{\n')
@@ -84,7 +84,7 @@ def write_class_attributes(f, attributes, class_name):
             f.write('''     * @static\n''')
         if isReadOnly:
             f.write('''     * @readonly\n''')
-        f.write('     * @member {' + attribute.get('type', '') + '} ' + '''{}.prototype.{}'''.format(class_name,
+        f.write('     * @member {' + str(attribute.get('type', '')) + '} ' + '''{}.prototype.{}'''.format(class_name,
                                                                                                      name) + '\n')
         f.write('     */\n')
         if  attribute.get('defaultValue'):
@@ -145,8 +145,8 @@ def write_class_operations(f, operations, attributes, class_name):
                                                             parameter.get('documentation', '')))
         # 返回值
         if returnParamter:
-            f.write('''   * @return {} {}\n'''.format('{' + returnParamter.get('type', 'any') + '}',
-                                                      returnParamter.get('documentation', '')))
+            f.write('''   * @return {} {}\n'''.format('{' + str(returnParamter.get('type', 'any')) + '}',
+                                                      str(returnParamter.get('documentation', ''))))
         f.write('''   */\n''')
         # 函数定义第一行
         func_first_str = '  static ' if isStatic else '  '
